@@ -96,16 +96,16 @@ while running:
         if keys[pygame.K_d]:
             dot_x += DOT_SPEED
 
-        # Apply gravity
+        
         dot_velocity_y += GRAVITY
         dot_y += dot_velocity_y
 
-        # Scroll the world
+        
         platform_x -= SCROLL_SPEED
         BLOCK_X -= SCROLL_SPEED
         BLOCK2_X -= SCROLL_SPEED
 
-        # Regenerate platform and block when they go off-screen
+        
         if platform_x + PLATFORM_WIDTH < 0:
             platform_x = SCREEN_WIDTH
         if BLOCK_X + BLOCK_WIDTH < 0:
@@ -113,18 +113,18 @@ while running:
         if BLOCK2_X + BLOCK2_WIDTH < 0:
             BLOCK2_X = SCREEN_WIDTH
 
-        # Prevent the dot from falling through the platform
+        
         if dot_y + DOT_RADIUS > PLATFORM_Y and platform_x < dot_x < platform_x + PLATFORM_WIDTH:
             dot_y = PLATFORM_Y - DOT_RADIUS
             dot_velocity_y = 0
 
-        # Prevent the dot from going off the screen horizontally
+        
         if dot_x - DOT_RADIUS < 0:
             dot_x = DOT_RADIUS
         if dot_x + DOT_RADIUS > SCREEN_WIDTH:
             dot_x = SCREEN_WIDTH - DOT_RADIUS
 
-        # Collision detection with the blocks
+       
         dot_rect = pygame.Rect(dot_x - DOT_RADIUS, dot_y - DOT_RADIUS, DOT_RADIUS * 2, DOT_RADIUS * 2)
         block_rect = pygame.Rect(BLOCK_X, BLOCK_Y, BLOCK_WIDTH, BLOCK_HEIGHT)
         block2_rect = pygame.Rect(BLOCK2_X, BLOCK2_Y, BLOCK2_WIDTH, BLOCK2_HEIGHT)
@@ -132,27 +132,27 @@ while running:
         if dot_rect.colliderect(block_rect) or dot_rect.colliderect(block2_rect):
             current_state = GAME_OVER
 
-    # Fill the screen with a color
+    
     screen.fill(WHITE)
 
     if current_state == MENU:
-        # Draw start button
+       
         start_button_rect = pygame.Rect(300, 400, 200, 50)
         pygame.draw.rect(screen, BLACK, start_button_rect)
         start_text = font.render("Start", True, WHITE)
         screen.blit(start_text, (355, 415))
 
     elif current_state == GAME:
-        # Draw the platform
+        
         pygame.draw.rect(screen, PLATFORM_COLOR, (platform_x, PLATFORM_Y, PLATFORM_WIDTH, PLATFORM_HEIGHT))
 
-        # Draw the block
+        
         pygame.draw.rect(screen, BLOCK_COLOR, (BLOCK_X, BLOCK_Y, BLOCK_WIDTH, BLOCK_HEIGHT))
 
-        # Draw Block Two
+        
         pygame.draw.rect(screen, BLOCK2_COLOR, (BLOCK2_X, BLOCK2_Y, BLOCK2_WIDTH, BLOCK2_HEIGHT))
 
-        # Draw the dot
+        
         pygame.draw.circle(screen, DOT_COLOR, (dot_x, dot_y), DOT_RADIUS)
 
     elif current_state == GAME_OVER:
@@ -162,13 +162,13 @@ while running:
         restart_text = font.render("Click to Restart", True, BLACK)
         screen.blit(restart_text, (290, 350))
 
-    # Update the display
+    
     pygame.display.flip()
 
-    # Cap the frame rate
+   
     clock.tick(FPS)
 
-# Clean up
+
 pygame.quit()
 sys.exit()
 
